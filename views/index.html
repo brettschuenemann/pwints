@@ -26,15 +26,21 @@
 		var zenCard;
 		var red = '#B22222';
 		var teal = '#46B6AC';
-		var sdk = PWSDK.init();
+		try {
+			var sdk = PWSDK.init();
+		} catch(err) {
+			console.log(err);	
+		}
 
 
 		$(function() {
-
-			sdk.setAppUI({height: 1000});
-			sdk.getContext().then(function(data) {
-				console.log(data.context);
-			});
+			if (sdk) {
+				sdk.setAppUI({height: 1000});
+				sdk.getContext().then(function(data) {
+					console.log(data.context);
+				});
+			}
+			
 			zenCard = new Vue({
 				el: '#zenCard',
 				data: {
