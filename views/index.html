@@ -50,7 +50,7 @@
 				return string.charAt(0).toUpperCase() + string.slice(1);
 			}
 
-			$("button").on("click", function () {
+			function fetchZendeskTickets(){
 				$.ajax({
 				type: 'GET',
 				dataType: 'json',
@@ -90,12 +90,15 @@
 				}
 
 				});
-			});
+			}
+
+			$("button").on("click", fetchZendeskTickets);
+
+			fetchZendeskTickets();
+
 		});
 
 	</script>
-
-	<button>Display Ticket Info</button>
 
 	<!-- Square card -->
 	<style>
@@ -159,6 +162,9 @@
 				</div>
 
 		</main>
+	</div>
+	<div>
+	<button>Display Ticket Info</button>
 	</div>
 </body>
 </html>
