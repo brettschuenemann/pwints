@@ -15,7 +15,7 @@
 <script>
 
 	var person = {
-		email : 'billmcpherson87@gmail.com'
+		email : 'jim@dundermifflin.com'
 	};
 
 	var zenCard;
@@ -106,6 +106,13 @@
 
 <style>
 
+	html {
+	  height: 100%;
+	}
+	body {
+	  min-height: 100%;
+	}
+
 	.demo-card-square.mdl-card {
 	  width: 100%;
 	  margin: auto;
@@ -140,6 +147,7 @@
 		font-size: 12px;
     	color: #888;
     	font-weight: 400;
+    	line-height:14px !important;
     }
 
 	.mdl-list__item-primary-content-sane a {
@@ -151,10 +159,8 @@
 		text-decoration: underline;
 	}
 
-	.mdl-list__item-text-body-sane {
-		font-family: Roboto, sans-serif;
-		font-size: 12px;
-		font-weight: 400;		
+	.mdl-progress {
+		margin-top: 40px;
 	}
 
 
@@ -171,7 +177,7 @@
 			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Fetching Zendesk Tickets</h2>
 		</div>
 		<div class="mdl-card__supporting-text mdl-list__item-primary-content-sane">
-			This may take a moment.
+			<span>This may take a moment.</span>
 			<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 		</div>
 	</div>
