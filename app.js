@@ -48,35 +48,27 @@ router.get("/contact",function(req,res){
 router.get("/zeninfo",function(req,res){
 	
 	var custEmail = req.query.email;
-	
-	var custEmail1 = 'bschuenemann@prosperworks.com';
-//	var query = "type:end_users+email:bschuenemann@prosperworks.com";
-	var query = "type:user email:" + custEmail1;
-
+	var query = "type:user email:" + custEmail;
 
 	client.search.query(query, function (err, req, result) {
-	if (err) {
-		console.log(err);
-		return;
-	}
-	console.log('++++++' + JSON.stringify(result, null, 2, true));
+		if (err) {
+			console.log(err);
+			return;
+		}
+
+		var userId;
+		if(result[0]) {
+			userId = result[0].id;
+		}
+
+		var ticks = client.tickets.listByUserRequested(userId, function (err, statusList, body, responseList, resultList) {
+			if (err) {
+				console.log(err);
+				return;
+			}
+			res.send(body);
+		});
 	});	  
-
-
-
-	var ticks = client.tickets.list(function (err, statusList, body, responseList, resultList) {
-	if (err) {
-		console.log(err);
-		return;
-	}
-
-	console.log('params: ' + JSON.stringify(req.params));
-	console.log('body: ' + JSON.stringify(req.body));
-	console.log('query: ' + JSON.stringify(req.query.email));
-
-	res.send(body);
-	});
-  
 });
 
 router.get("/getuser",function(req,res){
@@ -104,4 +96,3 @@ app.use("*",function(req,res){
 app.listen(8080,function(){
   console.log("Live at Port 8080");
 });
-

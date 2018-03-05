@@ -23,6 +23,7 @@
 	var teal = '#46B6AC';
 
 	try {
+		debugger;
 		var pwSdkObj = PWSDK.init();
 	} catch(err) {
 		console.log(err);	
@@ -30,9 +31,11 @@
 
 	$(function() {
 		if (pwSdkObj) {
-			pwSdkObj.setAppUI({height: 200});
+			pwSdkObj.setAppUI({height: 300	});
 			pwSdkObj.getContext().then(function(data) {
-				console.log(data.context);
+				person.email = data.context.primary_email;
+				fetchZendeskTicketsByEmail(person);
+				console.log('CONTEXT OBJECT:' + data.context);
 			});
 		}
 
@@ -48,11 +51,11 @@
 			return string.charAt(0).toUpperCase() + string.slice(1);
 		}
 
-		function fetchZendeskTicketsByEmail(personEmail){
+		function fetchZendeskTicketsByEmail(person){
 			$.ajax({
 			type: 'GET',
 			dataType: 'json',
-			data: personEmail,
+			data: person,
 			url: '/zeninfo',
 			success: function(result) {
 				console.log(result);
@@ -92,7 +95,10 @@
 
 		//$("button").on("click", fetchZendeskTicketsByEmail(person.email));
 
-		fetchZendeskTicketsByEmail(person.email);
+		if (!pwSdkObj) {
+			console.log('no context object...fetching tickets for default email:' + person.email)
+			fetchZendeskTicketsByEmail(person);
+		}
 
 	});
 
