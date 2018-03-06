@@ -63,6 +63,7 @@
 				zenTicketsList.status = 'success';
 				zenTicketsList.items = [];
 				$.each(result, function(index){
+
 					var priority = capitalizeFirstLetter(result[index].priority);
 					var type = capitalizeFirstLetter(result[index].type);
 					var status = capitalizeFirstLetter(result[index].status);
@@ -74,7 +75,7 @@
 						created.getMonth()+1 + '-' + 
 						created.getDate() + '-' + 
 						created.getFullYear();
-					zenTicketsList.user = user;
+					
 					zenTicketsList.items.push({
 						ticketId : result[index].id,
 						subject : result[index].raw_subject, 
@@ -88,6 +89,8 @@
 						url : url,
 						created : created_formatted
 					});
+
+					if(zenTicketsList.user == '') { zenTicketsList.user = user; }
 
 				});
 			},
