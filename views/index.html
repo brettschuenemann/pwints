@@ -45,7 +45,8 @@
 			el: '#zenTicketsList',
 			data: {
 			items: [],
-			status: 'new'
+			status: 'new',
+			newTicketUrl: 'https://billmcpherson.zendesk.com/requests/new'
 			}
 		})
 
@@ -129,6 +130,8 @@
 
 	.mdl-list-sane li {
 		font-size: 14px;
+		padding-top: 4px;
+    	padding-bottom: 4px;
 	}
 
 	.mdl-card__title-sane {
@@ -178,11 +181,6 @@
     	text-decoration: none;
     	font-weight:normal;
 	}
-
-
-
-
-
 </style>
 
 </head>
@@ -204,12 +202,12 @@
 		<div class="mdl-card__title mdl-card__title-sane" >
 			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Zendesk Tickets ({{items.length}})</h2>
 			<div class="mdl-layout-spacer"></div>
-    		<i class="material-icons material-icons-sane"><a target="_blank" href="https://support.prosperworks.com/hc/en-us/requests/new">add</a></i>
+    		<i class="material-icons material-icons-sane"><a target="_blank" v-bind:href="newTicketUrl">add</a></i>
 		</div>
 		<div class="mdl-card__supporting-text mdl-card__supporting-text-nopadding">
-			<ul style="margin:0px;" class="mdl-list mdl-list-sane">
-				<li class="mdl-list__item mdl-list__item--three-line" v-for="item in items">
-					<span class="mdl-list__item-primary-content mdl-list__item-primary-content-sane">
+			<ul class="mdl-list mdl-list-sane">
+				<li style="height:initial;" class="mdl-list__item mdl-list__item--three-line mdl-list__item--three-line-sane" v-for="item in items">
+					<span style="height:initial; max-height:52px;" class="mdl-list__item-primary-content mdl-list__item-primary-content-sane">
 					    <span><a :href="item.url" target="_blank">{{item.subject}}</a> {{ item.priority }} {{ item.type }}</span>
 					    <br /><span>{{item.description}}</span>
 					</span>
