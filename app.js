@@ -53,15 +53,17 @@ router.get("/zeninfo",function(req,res){
 	var query = "type:user email:" + custEmail;
 
 	client.search.query(query, function (err, req, result) {
+		var userId;
 		if (err) {
+			console.log(err);
+			res.send(err);
 			return;
 		}
-		console.log(result);
-		var userId;
+		
 		if(result[0]) {
 			userId = result[0].id;
 
-		var ticks = client.tickets.listByUserRequested(userId, function (err, statusList, body, responseList, resultList) {
+			var ticks = client.tickets.listByUserRequested(userId, function (err, statusList, body, responseList, resultList) {
 			if (err) {
 				console.log(err);
 				return;
@@ -74,22 +76,6 @@ router.get("/zeninfo",function(req,res){
 		}
 	});	  
 });
-
-router.get("/getuser",function(req,res){
-	var userId = req.query.id;
-	var query = "type:user id:" + userId;
-
-	client.search.query(query, function (err, req, result) {
-	if (err) {
-		console.log(err);
-		return;
-	}
-	
-	console.log('USERID:    ' + JSON.stringify(result, null, 2, true));
-	
-	});	  
-});
-
 
 app.use("/",router);
 
