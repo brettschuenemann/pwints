@@ -1,17 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1,minimal-ui" name="viewport">
+<link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+<link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">
 <title>PW Zendesk Integration</title>
-<link rel="stylesheet" media="all" href="//d3jas8421cca9z.cloudfront.net/assets/fonts-c9c0f134fac8ad93db4f65be4f4a202294575920d869ba20f652fdb180c12c7d.css" />
 <!--<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">-->
-<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href='//fonts.googleapis.com/css?family=Roboto:500,900,400italic,100,700italic,300,700,500italic,400' rel='stylesheet' type='text/css'>
-<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/pw-app-sdk@0.1.2/dist/pwsdk.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-material@beta"></script>
+<script>
+      Vue.use(VueMaterial.default)
+</script>
 
 <script>
 
@@ -64,29 +70,25 @@
 				zenTicketsList.status = 'success';
 				zenTicketsList.items = [];
 				$.each(result, function(index){
-					var priority = capitalizeFirstLetter(result[index].priority);
-					var type = capitalizeFirstLetter(result[index].type);
-					var status = capitalizeFirstLetter(result[index].status);
+					var p = capitalizeFirstLetter(result[index].priority);
+					var t = capitalizeFirstLetter(result[index].type);
 					var url = result[index].url.replace('/api/v2', '').replace('.json','');
 					var s;
-					var created = new Date(result[index].created_at);
-					var created_formatted = 
-						created.getMonth()+1 + '-' + 
-						created.getDate() + '-' + 
-						created.getFullYear();
-
+					if(p == 'Urgent'){
+						s = 'mdl-card__title mdl-card--expand mdl-card__title-red';
+					} else {
+						s = 'mdl-card__title mdl-card--expand';
+					}
 					zenTicketsList.items.push({
 						ticketId : result[index].id,
 						subject : result[index].raw_subject, 
-						priority : priority, 
+						priority : p, 
 						url : result[index].url, 
-						status : status,
 						st : s,
-						type : type,
+						type : t,
 						description : result[index].description,
 						tags : result[index].tags,
-						url : url,
-						created : created_formatted
+						url : url
 					});
 
 				});
@@ -156,6 +158,7 @@
     	font-weight: 400;
     	line-height:14px !important;
     	letter-spacing: normal;
+    	min-height:unset;
     }
 
 	.mdl-list__item-primary-content-sane a {
@@ -169,7 +172,7 @@
 	}
 
 	.mdl-progress {
-		margin-top: 20px;
+		margin-top: 40px;
 	}
 
 	.material-icons-sane {
@@ -192,13 +195,16 @@
     	font-weight:normal;
 	}
 
-	.mdl-list-item-second-line {
-		font-size: 12px;
-    	line-height: 14px;
-    	color: #444;
-    	font-weight: 400;
+	.md-list-item-sane {
+		min-height: 0px;
 	}
 
+</style>
+
+<style lang="scss" scoped>
+  .md-progress-bar {
+    margin: 24px;
+  }
 </style>
 
 </head>
@@ -207,37 +213,29 @@
 
 <div id="zenTicketsList">
 
-	<div class="demo-card-square mdl-card mdl-shadow--2dp" v-if="status === 'new'">
-		<div class="mdl-card__title mdl-card__title-sane" >
-			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Zendesk Tickets</h2>
+	<div class="demo-card-square md-card" v-if="status === 'new'">
+		<div class="md-card-header mdl-card__title-sane" >
+			<h2 class="md-card-title-text mdl-card__title-text-sane">Fetching Zendesk Tickets</h2>
 		</div>
-		<div class="mdl-card__supporting-text mdl-list__item-primary-content-sane">
-			<div>Fetching your Zendesk Tickets</div>
-			<div></div>
-			<div>This may take a moment.</div>
-			<div id="p2" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+		<div class="md-card-supporting-text mdl-list__item-primary-content-sane">
+			<span>This may take a moment.</span>
+			<md-progress-bar md-mode="indeterminate"></md-progress-bar>
 		</div>
 	</div>
 
-	<div class="demo-card-square mdl-card mdl-shadow--2dp" id="zenTicketsList" v-else-if="status === 'success' && items.length">
-		<div class="mdl-card__title mdl-card__title-sane" >
-			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Zendesk Tickets ({{items.length}})</h2>
-			<div class="mdl-layout-spacer"></div>
-    		<i class="material-icons material-icons-sane"><a target="_blank" v-bind:href="newTicketUrl">add</a></i>
-		</div>
-		<div class="mdl-card__supporting-text mdl-card__supporting-text-nopadding">
-			<ul class="mdl-list mdl-list-sane">
-				<li style="height:initial;" class="mdl-list__item mdl-list__item--three-line mdl-list__item--three-line-sane" v-for="item in items">
-					<span style="height:initial; max-height:52px;" class="mdl-list__item-primary-content mdl-list__item-primary-content-sane">
-					    <span><a :href="item.url" target="_blank">{{item.subject}}</a></span>
-					    <div class="mdl-list-item-second-line">{{item.created}} | Status: {{item.status}} | Priority: {{item.priority}}</div>
-					    <div>{{item.description}}</div>
-					    <!--<br /><span>{{item.description}}</span>-->
-					</span>
-				</li>
-			</ul>
-		</div>
-	</div>
+
+    <md-list class="md-double-line md-double-line-sane" v-else-if="status === 'success' && items.length">
+      <md-subheader class="mdl-card__title-text-sane">Zendesk Tickets ({{items.length}})</md-subheader>
+
+      <md-list-item class="md-list-item-sane" v-for="item in items">
+        <md-icon class="md-primary">info</md-icon>
+        <md-tooltip md-direction="right">info</md-tooltip>
+        <div class="md-list-item-text mdl-list__item-primary-content-sane md-list-item-sane ">
+			<span><a :href="'item.url'" target="_blank">{{item.subject}}</a></span>
+			<span>{{item.description}}</span>
+        </div>
+      </md-list-item>
+
 
 	<div class="demo-card-square mdl-card mdl-shadow--2dp" id="zenTicketsList" v-else-if="status === 'success'">
 		<div class="mdl-card__title mdl-card__title-sane" >
@@ -250,10 +248,10 @@
 
 	<div class="demo-card-square mdl-card mdl-shadow--2dp" id="zenTicketsList" v-else-if="status === 'error'">
 		<div class="mdl-card__title mdl-card__title-sane" >
-			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Zendesk Tickets</h2>
+			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Error</h2>
 		</div>
 		<div class="mdl-card__supporting-text">
-			<span>ERROR: There has been an error retrieving the Zendesk Tickets</span>
+			<span>There has been an error retrieving the Zendesk Tickets</span>
 		</div>
 	</div>
 

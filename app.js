@@ -33,6 +33,10 @@ router.get("/",function(req,res){
   res.sendFile(path + "index.html");
 });
 
+router.get("/2",function(req,res){
+  res.sendFile(path + "index2.html");
+});
+
 router.get("/assets",function(req,res){
   res.sendFile(path + "/assets");
 });
@@ -59,7 +63,6 @@ router.get("/zeninfo",function(req,res){
 		var userId;
 		if(result[0]) {
 			userId = result[0].id;
-		}
 
 		var ticks = client.tickets.listByUserRequested(userId, function (err, statusList, body, responseList, resultList) {
 			if (err) {
@@ -68,6 +71,13 @@ router.get("/zeninfo",function(req,res){
 			}
 			res.send(body);
 		});
+
+		} else {
+			res.send(result);
+		}
+
+
+
 	});	  
 });
 
