@@ -107,6 +107,11 @@
 
 <style>
 
+	body {
+		-webkit-font-smoothing: antialiased;
+		font-family: 'Roboto', sans-serif;
+	}
+
 	.demo-card-square.mdl-card {
 	  width: 100%;
 	  margin: auto;
@@ -181,7 +186,7 @@
 
 	<div class="demo-card-square mdl-card mdl-shadow--2dp" id="zenTicketsList" v-else-if="status === 'success' && items.length">
 		<div class="mdl-card__title mdl-card__title-sane" >
-			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Zendesk Tickets</h2>
+			<h2 class="mdl-card__title-text mdl-card__title-text-sane">Zendesk Tickets ({{items.length}})</h2>
 		</div>
 		<div class="mdl-card__supporting-text mdl-card__supporting-text-nopadding">
 			<ul style="margin:0px;" class="mdl-list mdl-list-sane">
