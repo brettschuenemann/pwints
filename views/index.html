@@ -16,7 +16,7 @@
 <script>
 
 	var person = {
-		email : 'jim@dundermifflin.com'
+		email : 'customer@example.com'
 	};
 
 	var zenCard;
@@ -45,7 +45,7 @@
 			data: {
 			items: [],
 			status: 'new',
-			newTicketUrl: 'https://billmcpherson.zendesk.com/requests/new'
+			newTicketUrl: 'https://d3v-prosperworksdev.zendesk.com/requests/new'
 			}
 		})
 
@@ -179,23 +179,22 @@
     	font-weight: 400;
 	}
 
-	.material-icons-sane-small {
-    	font-size: 12px;
-    	line-height: 14px;
-    	color: #888;
-    	font-weight: 400;
-	}
-
 	.material-icons-sane a {
     	color: #0D94F6;
     	text-decoration: none;
     	font-weight:normal;
 	}
 
+	.material-icons-sane-small {
+    	font-size: 12px;
+    	line-height: 16px;
+    	color: #888;
+    	font-weight: 400;
+	}
 	.mdl-list-item-second-line {
 		font-size: 12px;
     	line-height: 14px;
-    	color: #444;
+		color: #363636;
     	font-weight: 400;
 	}
 
@@ -229,9 +228,12 @@
 			<ul class="mdl-list mdl-list-sane">
 				<li style="height:initial;" class="mdl-list__item mdl-list__item--three-line mdl-list__item--three-line-sane" v-for="item in items">
 					<span style="height:initial; max-height:52px;" class="mdl-list__item-primary-content mdl-list__item-primary-content-sane">
-					    <span><a :href="item.url" target="_blank">{{item.subject}}</a></span>
+					    <span>
+					    	<a :href="item.url" target="_blank">{{item.subject}}</a>
+					    	<span class="material-icons material-icons-sane-small">info</span>
+					    </span>
 					    <div class="mdl-list-item-second-line">{{item.created}} | Status: {{item.status}} | Priority: {{item.priority}}</div>
-					    <div>{{item.description}}</div>
+					    <!--<div>{{item.description}}</div>-->
 					    <!--<br /><span>{{item.description}}</span>-->
 					</span>
 				</li>
