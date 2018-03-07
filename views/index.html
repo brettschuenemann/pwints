@@ -47,25 +47,27 @@
 					    	<a :href="item.url" target="_blank">{{item.subject}}</a>
 					    	<!--<span class="material-icons material-icons-sane-small">info</span>-->
 					    </span>
-					    <div class="mdl-list-item-second-line">{{item.created}} | 
+					    <div class="mdl-list-item-second-line">{{item.created}} |  
 					    <span class="mdl-chip mdl-chip-sane" 
 					    	  :class="{
-					    	  statusNew : (item.status == 'New'),
-					    	  statusOpen : (item.status == 'Open'),
-					    	  statusPending : (item.status == 'Pending'),
-					    	  statusOnHold : (item.status == 'On-hold'),
-					    	  statusSolved : (item.status == 'Solved')
+					    	  statusNew : (item.status == 'new'),
+					    	  statusOpen : (item.status == 'open'),
+					    	  statusPending : (item.status == 'pending'),
+					    	  statusOnHold : (item.status == 'on-hold'),
+					    	  statusSolved : (item.status == 'solved')
 					   		}"
 					    >
     						<span class="mdl-chip__text mdl-chip__text-sane">{{item.status}}</span>
 						</span>
-						 | Priority: {{item.priority}}
+						<span v-if="item.type">{{item.type}}</span>
+						<span v-if="item.ticketId">#{{item.ticketId}}</span>
+						<span v-if="item.priority">({{item.priority}})</span>
 						</div>
 					</span>
 				</li>
 				<li style="height:initial;" class="mdl-list__item mdl-list__item--three-line mdl-list__item--three-line-sane" v-if="items.length > 4">
-					<span style="height:initial; max-height:52px;" class="mdl-list__item-primary-content mdl-list__item-primary-content-sane">
-						<a target="_blank" :href="'https://d3v-prosperworksdev.zendesk.com/agent/users/' + user + '/'">View All Tickets ({{items.length}})</a>
+					<span style="height:initial; max-height:52px; text-align:right;" class="mdl-list__item-primary-content mdl-list__item-primary-content-sane">
+						<a target="_blank" :href="'https://d3v-prosperworksdev.zendesk.com/agent/users/' + user + '/'">> View All Tickets ({{items.length}})</a>
 					</span>
 				</li>
 			</ul>

@@ -4,17 +4,15 @@
 	};
 
 	var zenCard;
-	var red = '#B22222';
-	var teal = '#46B6AC';
 
 	try {
-		//debugger;
 		var pwSdkObj = PWSDK.init();
 	} catch(err) {
 		console.log(err);	
 	}
 
 	$(function() {
+		
 		if (pwSdkObj) {
 			pwSdkObj.setAppUI({height: 300	});
 			pwSdkObj.getContext().then(function(data) {
@@ -50,9 +48,9 @@
 				zenTicketsList.items = [];
 				$.each(result, function(index){
 
-					var priority = capitalizeFirstLetter(result[index].priority);
-					var type = capitalizeFirstLetter(result[index].type);
-					var status = capitalizeFirstLetter(result[index].status);
+					//if (result[index].priority) { var priority = capitalizeFirstLetter(result[index].priority); }
+					if (result[index].type) { var type = capitalizeFirstLetter(result[index].type); }
+					//if (result[index].status) { var status = capitalizeFirstLetter(result[index].status); }
 					var url = result[index].url.replace('/api/v2', '').replace('.json','');
 					var s;
 					var user = result[index].requester_id
@@ -65,9 +63,9 @@
 					zenTicketsList.items.push({
 						ticketId : result[index].id,
 						subject : result[index].raw_subject, 
-						priority : priority, 
+						priority : result[index].priority, 
 						url : result[index].url, 
-						status : status,
+						status : result[index].status,
 						st : s,
 						type : type,
 						description : result[index].description,

@@ -51,16 +51,25 @@ router.get("/contact",function(req,res){
 router.get("/zeninfo",function(req,res){
 	var custEmail = req.query.email;
 	var query = "type:user email:" + custEmail;
-
+	console.log("in zeninfo");
+    console.log("debugreq:");
+	console.log(req);
+    console.log("debugres:");
+	console.log(res);
 	client.search.query(query, function (err, req, result) {
+		console.log("debuginquery");
 		var userId;
 		if (err) {
+			console.log("debugerror");
 			console.log(err);
 			res.send(err);
 			return;
 		}
 		
 		if(result[0]) {
+			console.log("debugresult");
+			console.log(result);
+
 			userId = result[0].id;
 
 			var ticks = client.tickets.listByUserRequested(userId, function (err, statusList, body, responseList, resultList) {
