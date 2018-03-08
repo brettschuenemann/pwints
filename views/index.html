@@ -59,7 +59,7 @@
 					    >
     						<span class="mdl-chip__text mdl-chip__text-sane">{{item.status}}</span>
 						</span>
-						<span v-if="item.type">{{item.type}}</span>
+						<span v-if="item.type" style="text-transform: capitalize;">{{item.type}}</span>
 						<span v-if="item.ticketId">#{{item.ticketId}}</span>
 						<span v-if="item.priority">({{item.priority}})</span>
 						</div>

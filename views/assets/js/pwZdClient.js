@@ -48,11 +48,7 @@
 				zenTicketsList.items = [];
 				$.each(result, function(index){
 
-					//if (result[index].priority) { var priority = capitalizeFirstLetter(result[index].priority); }
-					if (result[index].type) { var type = capitalizeFirstLetter(result[index].type); }
-					//if (result[index].status) { var status = capitalizeFirstLetter(result[index].status); }
-					var url = result[index].url.replace('/api/v2', '').replace('.json','');
-					var s;
+					var ticketUrl = result[index].url.replace('/api/v2', '').replace('.json','');
 					var user = result[index].requester_id
 					var created = new Date(result[index].created_at);
 					var created_formatted = 
@@ -66,11 +62,10 @@
 						priority : result[index].priority, 
 						url : result[index].url, 
 						status : result[index].status,
-						st : s,
-						type : type,
+						type : result[index].type,
 						description : result[index].description,
 						tags : result[index].tags,
-						url : url,
+						url : ticketUrl,
 						created : created_formatted
 					});
 
