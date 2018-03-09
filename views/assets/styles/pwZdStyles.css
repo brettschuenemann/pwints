@@ -128,4 +128,13 @@
 		background:#828282;
 	}
 
+	.mdl-list__item-avatar-sane.material-icons {
+		height: 24px;
+		width: 24px;
+		font-size: 16px;
+		line-height: 24px;
+		vertical-align: middle;
+		text-align: center ;
+	}
+
 
