@@ -16,6 +16,11 @@ router.get("/",function(req,res){
   res.sendFile(path + "index.html");
 });
 
+//REMOVE: hack for PW staging environment
+router.get("/sidebar",function(req,res){
+  res.sendFile(path + "index.html");
+});
+
 router.get("/2",function(req,res){
   res.sendFile(path + "index2.html");
 });
