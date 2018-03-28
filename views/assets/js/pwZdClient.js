@@ -14,7 +14,7 @@
 	$(function() {
 		
 		if (pwSdkObj) {
-			pwSdkObj.setAppUI({height: 300	});
+			pwSdkObj.setAppUI({height: 300});
 			pwSdkObj.getContext().then(function(data) {
 				person.email = data.context.primary_email;
 				fetchZendeskTicketsByEmail(person);
@@ -68,6 +68,8 @@
 						url : ticketUrl,
 						created : created_formatted
 					});
+
+					if (pwSdkObj) { pwSdkObj.setAppUI({ count: zenTicketsList.items.length }); }
 
 					if(zenTicketsList.user == '') { zenTicketsList.user = user; }
 
