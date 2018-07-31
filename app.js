@@ -1,3 +1,5 @@
+require('dotenv-safe').load();
+
 var express = require("express");
 var app = express();
 var router = express.Router();
@@ -7,9 +9,9 @@ app.use(express.static('views/assets'));
 var zendesk = require('node-zendesk');
 
 var client = zendesk.createClient({
-  username:  'janiano@prosperworks.com',
-  token:     'GTaiKLP52NFr0usK53Mo8whLM8cWblBcRFiyz4cm',
-  remoteUri: 'https://d3v-prosperworksdev.zendesk.com/api/v2'
+ username:  process.env.ZENDESK_USERNAME,
+ token:     process.env.ZENDESK_TOKEN,
+ remoteUri: process.env.ZENDESK_REMOTE_URI
 });
 
 router.get("/",function(req,res){

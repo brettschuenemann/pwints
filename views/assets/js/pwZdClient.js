@@ -28,7 +28,7 @@
 			user: '',
 			items: [],
 			status: 'new',
-			newTicketUrl: 'https://d3v-prosperworksdev.zendesk.com/hc/en-us/requests/new'
+			newTicketUrl: 'https://billmcphersonhelp.zendesk.com/hc/en-us/requests/new'
 			}
 		})
 

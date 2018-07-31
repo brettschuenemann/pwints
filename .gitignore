@@ -27,3 +27,6 @@ Temporary Items
 
 # Node
 node_modules
+
+# Creds
+.env
